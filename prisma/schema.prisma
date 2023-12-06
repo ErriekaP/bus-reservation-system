@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  userType String
+  name String
+  email String @unique
+  pwd String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime  @updatedAt
+  ticket Ticket[]
+}
+
+model Bus {
+  id Int @id @default(autoincrement())
+  destination String
+  ticketLimit Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ticket Ticket[]
+}
+
+model Ticket {
+  id Int @id @default(autoincrement())
+  busId Int 
+  userId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ticket User @relation(fields: [userId], references: [id])
+  bus Bus @relation(fields: [busId], references: [id])
+}
