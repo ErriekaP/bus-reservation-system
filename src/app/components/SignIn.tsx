@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { register } from '../actions/users/register';
+import { getUser } from '../actions/users/getUser';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -43,19 +44,29 @@ const SignInForm = () => {
         router.push('/auth/register');
       };
 
-    useEffect(() => {
-        if (status === 'authenticated') {
-            router.push('/auth/admin');
-            router.refresh();
-        }
+    useEffect(() => { 
+        async function fetchUser (){
+            if (status === 'authenticated') {
+                const user = await getUser(email)
+                if(user?.userType === 'admin'){
+                    router.push('/auth/admin');
+                } else{
+                    router.push('/auth/passenger');
+                }
+                console.log(user)
+    
+                //router.push('/auth/admin');
+                router.refresh();
+            }
+        } 
+        fetchUser()
+
     }, [status]);
 
     return (
         <div className='flex flex-col gap-4 m-5'>
-     
-            <input className="block w-full rounded-md border-2 border-black border-solid py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
-        
-            <input className="block w-full rounded-md border-2 border-black border-solid py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input className="block w-full rounded-md border-2 border-black border-solid py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  type='text' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input className="block w-full rounded-md border-2 border-black border-solid py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
             <div>
             <button className="bg-primary hover:bg-[#267961] text-black font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow mr-4 " onClick={handleSubmit}>Sign In</button>
