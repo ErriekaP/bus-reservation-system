@@ -3,13 +3,13 @@ import React from 'react'
 
 const SignInPage = () => {
   return (
-    <div className='flex flex-col'>
-      <div className='flex justify-center'>
+    <div className='flex flex-col items-center justify-center h-screen'>
+      <div >
         <h1 className='text-black text-4xl font-global-font my-2'>
             CERES TOURS
         </h1>
         </div>
-        <div className='flex justify-center'>
+        <div >
         <SignIn />
         </div>
     </div>
