@@ -8,11 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        'global-font': ["Michroma", "sans-serif"]
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors:{
+        background:"#F8F363",
+        primary:"#209774",
+        secondary:"#39638E",
+        accent:"#B12006",
+
+      }
     },
   },
   plugins: [],

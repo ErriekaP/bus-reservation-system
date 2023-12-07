@@ -11,18 +11,18 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
   userType String
   name String
   email String @unique
-  pwd String?
+  pass String
   createdAt DateTime @default(now())
   updatedAt DateTime  @updatedAt
   ticket Ticket[]
 }
 
 model Bus {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
   destination String
   ticketLimit Int
   createdAt DateTime @default(now())
@@ -31,9 +31,9 @@ model Bus {
 }
 
 model Ticket {
-  id Int @id @default(autoincrement())
-  busId Int 
-  userId Int
+  id String @id @default(cuid())
+  busId String 
+  userId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ticket User @relation(fields: [userId], references: [id])
