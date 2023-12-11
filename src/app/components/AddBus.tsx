@@ -1,11 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { createTicket } from '../actions/ticket/createTicket';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { getBusDestinations } from '../actions/bus/getBusDestination';
-import { useUser } from '@/contexts/userContext';
 import { createBus } from '../actions/bus/createBus'
 
 const CreateTicketPage = () => {

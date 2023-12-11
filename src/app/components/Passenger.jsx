@@ -14,7 +14,7 @@ const PassengerPage = () => {
   const [tickets, setTickets] = useState([]);
   const { user } = useUser();
   const {data: session} = useSession()
-  // console.log(user)
+  const [selectedDestination, setSelectedDestination] = useState('');
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -43,6 +43,14 @@ const PassengerPage = () => {
     router.push('/auth/addTicket');
   };
 
+  const handleUpdate = (ticketId) => {
+    //router.push('/auth/updateTicket');
+    // Fetch the updated list of tickets after deletion
+
+    //router.push(`/auth/ticketId/${ticketId}`);
+    router.push(`/auth/${ticketId}`);
+  };
+
   const handleDelete = async (ticketId) => {
     try {   
       await deleteTicket(ticketId);
@@ -50,10 +58,10 @@ const PassengerPage = () => {
        // Fetch the updated list of tickets after deletion
        const email = session.user?.email;
        const userId = await getUserIdByEmail(email);
-       const updatedTickets = await getTicket(userId);
+       const deletedTickets = await getTicket(userId);
 
        // Update the component state with the updated tickets
-      setTickets(updatedTickets);
+      setTickets(deletedTickets);
       console.log('Ticket deleted successfully');
       
     } catch (error) {
@@ -64,36 +72,38 @@ const PassengerPage = () => {
   };
 
   return (
-    <div>
-      <h1>Create Ticket</h1>
-      <button className="bg-primary hover:bg-[#2D5073] text-black font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow " onClick={handleRedirect}>Add Ticket</button>
-      <div>
+    <div className="w-full flex justify-center flex-col items-center">
+      <div className="w-full max-w-6xl px-8 flex justify-between items-center">
+        <h1 className="text-3xl">Tickets</h1>
+        <button className="bg-primary hover:bg-[#2D5073] text-black font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow " onClick={handleRedirect}>Add Ticket</button>
+      </div>
+      <div className="flex justify-center max-w-6xl w-full">
       {tickets.length === 0 ? (
         <p>No tickets found.</p>
       ) : (
-        <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+        <div className="w-full relative flex-col h-full text-gray-700 bg-white shadow-md bg-clip-border mx-8 my-4 bg-opacity-60 p-8">
         <table className="w-full text-left table-auto min-w-max">
           <thead>
             <tr>
-              <th className="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+              <th className="p-4 bg-blue-gray-50">
                 <p className="block font-sans text-sm antialiased font-normal leading-none text-black">
                 Ticket ID
                 </p>
               </th>
-              <th className="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+              <th className="p-4 bg-blue-gray-50">
                 <p className="block font-sans text-sm antialiased font-normal leading-none text-black">
                 Bus Destination
                 </p>
               </th>
-              <th className="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+              <th className="p-4 bg-blue-gray-50">
                 <p className="block font-sans text-sm antialiased font-normal leading-none text-black">
                 Date & Time
                 </p>
               </th>
-              <th className="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+              <th className="p-4 bg-blue-gray-50">
                 <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
               </th>
-              <th className="p-4 border-b border-blue-gray-100 bg-blue-gray-50">
+              <th className="p-4 bg-blue-gray-50">
                 <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
               </th>
             </tr>
@@ -116,9 +126,14 @@ const PassengerPage = () => {
                       {format(new Date(ticket.createdAt), 'MM/dd/yyyy')}
                   </p>
                 </td>
-                <td className="p-4"><button className="bg-secondary hover:bg-[#2D5073] text-black text-sm font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow" >Update</button>
-                </td>
-                <td className="p-4"><button className="bg-accent hover:bg-[#9A1D05] text-black text-sm font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow " 
+                <td className="p-4 flex justify-end gap-8"> 
+                <button
+                      className="bg-secondary hover:bg-[#2D5073] text-black text-sm font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow"
+                      onClick={() => handleUpdate(ticket.id)}
+                    >
+                      Update
+                    </button>
+                    <button className="bg-accent hover:bg-[#9A1D05] text-black text-sm font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow " 
                 onClick={() => handleDelete(ticket.id)} >Delete </button>
                 </td>
                 {/* Add more columns as needed */}
@@ -127,7 +142,6 @@ const PassengerPage = () => {
           </tbody>
         </table>
         </div>
-
       )}
     </div>
     </div>

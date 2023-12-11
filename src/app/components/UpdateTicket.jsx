@@ -1,48 +1,42 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { createTicket } from '../actions/ticket/createTicket';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { getBusDestinations, getAllBuses } from '../actions/bus/getBusDestination';
+import { getBusDestinations } from '../actions/bus/getBusDestination';
 import { useUser } from '@/contexts/userContext';
+import { getUserIdByEmail } from '../actions/ticket/getTicket';
 
-const CreateTicketPage: React.FC = () => {
+import { updateTicketDestination } from '../actions/ticket/updateTicket';
+
+const UpdateTickets = ({ ticketId }) => {
   const router = useRouter();
-  const [destinations, setDestinations] = useState<string[]>([]);
+  const [destinations, setDestinations] = useState([]);
   const [selectedDestination, setSelectedDestination] = useState('');
-  const { user } = useUser();
-  const [message, setMessage] = useState('');
-
-  const handleCreateTicket = async () => {
-    try {
-
-      const userId = user?.id;
-      await createTicket(userId, selectedDestination);
-      console.log('Ticket created successfully!');
-      setMessage("Ticket created successfully!");
-    
-    } catch (error) {
-      console.error('Error creating ticket:', error);
-      setMessage("Destination is Fully Booked.");
-   
-    }
-  };
 
   useEffect(() => {
-    // Fetch bus destinations when the component mounts
     const fetchDestinations = async () => {
       try {
         const fetchedDestinations = await getBusDestinations();
         setDestinations(fetchedDestinations);
-        console.log(setDestinations)
       } catch (error) {
         console.error('Error fetching destinations:', error);
       }
     };
 
     fetchDestinations();
-  }, []); 
+  }, []);
+
+  const handleUpdateTicket = async () => {
+    try {
+      // Use the ticket ID (passed as prop) to update the destination
+      await updateTicketDestination(ticketId, selectedDestination);
+
+      console.log('Ticket updated successfully!');
+    } catch (error) {
+      console.error('Error updating ticket:', error);
+    }
+  };
 
   return (
     <div className='flex flex-col gap-4 m-5'>
@@ -63,13 +57,14 @@ const CreateTicketPage: React.FC = () => {
           ))}
         </select>
       </label>
-      <button className="bg-primary hover:bg-[#267961] text-black font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow mr-4" onClick={handleCreateTicket}>Create Ticket</button>
-      <p className={`font-extrabold ${message.includes('successfully') ? 'text-primary' : 'text-accent'}`}>
-        {message}
-      </p>
-
+      <button
+        className="bg-primary hover:bg-[#267961] text-black font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow mr-4"
+        onClick={handleUpdateTicket}
+      >
+        Update Ticket
+      </button>
     </div>
   );
 };
 
-export default CreateTicketPage;
+export default UpdateTickets;

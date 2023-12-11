@@ -6,7 +6,6 @@ const PassengerPage = () => {
   return (
     <div>
       <Navbar/>
-      PassengerPage
       <Passenger/>
     </div>
   )
