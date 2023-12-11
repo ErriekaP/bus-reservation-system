@@ -46,7 +46,7 @@ export const authOptions: AuthOptions = {
                 if(password != userPassword) {
                     return null;
                 } 
-                return user;
+                return user
             }
         })
     ],
@@ -83,6 +83,7 @@ export const authOptions: AuthOptions = {
         async session(params: {session: Session; token: JWT; user: User}) {
             if(params.session.user) {
                 params.session.user.email = params.token.email;
+
             }
 
             return params.session;

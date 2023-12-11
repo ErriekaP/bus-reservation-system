@@ -14,7 +14,7 @@ export const register = async (email: string, password: string, name: string, us
         return "User with that email already exists."
     }
 
-    //const pass = bcrypt.hashSync(password, 10)
+    //const pass = bcrypt.h ashSync(password, 10)
 
     await prisma.user.create({
         data: {

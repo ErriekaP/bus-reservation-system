@@ -23,7 +23,7 @@ model User {
 
 model Bus {
   id String @id @default(cuid())
-  destination String
+  destination String @unique
   ticketLimit Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

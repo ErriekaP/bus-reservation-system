@@ -5,6 +5,7 @@ import { register } from '../actions/users/register';
 import { getUser } from '../actions/users/getUser';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/contexts/userContext';
 
 const SignInForm = () => {
     const router = useRouter();
@@ -15,6 +16,7 @@ const SignInForm = () => {
     const [password, setPassword] = useState('');
 
     const [message, setMessage] = useState('');
+    const { changeUser } = useUser();
 
     const handleSubmit = async () => {
         //setMessage('Signing in...');
@@ -40,7 +42,6 @@ const SignInForm = () => {
     };
 
     const handleRedirect = () => {
-        // You can use the router to programmatically navigate to another page
         router.push('/auth/register');
       };
 
@@ -48,6 +49,8 @@ const SignInForm = () => {
         async function fetchUser (){
             if (status === 'authenticated') {
                 const user = await getUser(email)
+                changeUser(user)
+                
                 if(user?.userType === 'admin'){
                     router.push('/auth/admin');
                 } else{
