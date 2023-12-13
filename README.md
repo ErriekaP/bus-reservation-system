@@ -12,16 +12,17 @@ Then, to start the application, use this command:
 ```bash
 npm run dev
 ```
-To run the Prisma Studio, use this command:
-
-```bash
-npx prisma studio
-```
 
 To run the tests, use this command:
 
 ```bash
 npm run test
+```
+
+To run the Prisma Studio, use this command:
+
+```bash
+npx prisma studio
 ```
 
 These are the following libraries with their versions that was used:
