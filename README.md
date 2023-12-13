@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Ceres Tours Bus Reservation System
+
+A bus reservation system has functionalities for both administrators and passengers. Administrators can add new bus destinations, view the available tickets for each destination, and modify the destination name or the number of tickets. Passengers, on the other hand, have the capability to add new tickets, update existing ticket details, and delete tickets as needed.
+
 ## Getting Started
 
 First step is to install the libraries:
