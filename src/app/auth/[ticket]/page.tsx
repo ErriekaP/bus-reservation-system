@@ -8,7 +8,6 @@
 
 const page: FC<pageProps> = ({params}) => {
     return <div>
-      <h1>other names{params.ticket}</h1>
       <UpdateTickets ticketId={params.ticket} />
     </div>
   }

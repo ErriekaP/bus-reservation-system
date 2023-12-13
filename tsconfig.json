@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/Passenger.jsx", "src/app/components/AddBus.jsx", "src/app/components/Admin.jsx", "src/app/components/ViewBus.jsx", "src/app/components/AddTicket.jsx", "src/app/components/AddTicket.jsx", "src/app/auth/[destinationId].js", "src/app/components/UpdateTicket.jsx", "src/app/auth/[ticketid].jsx", "src/app/actions/ticket/updateTicket.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/Passenger/Passenger.jsx", "src/app/components/AddBus.jsx", "src/app/components/Admin/Admin.jsx", "src/app/components/ViewBus.jsx", "src/app/components/AddTicket.jsx", "src/app/components/AddTicket.jsx", "src/app/auth/[destinationId].js", "src/app/components/UpdateTicket.jsx", "src/app/auth/[ticketid].jsx", "src/app/actions/ticket/updateTicket.js", "src/app/components/Navbar.jsx"],
   "exclude": ["node_modules"]
 }

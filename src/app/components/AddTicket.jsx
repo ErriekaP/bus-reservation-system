@@ -6,18 +6,19 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { getBusDestinations, getAllBuses } from '../actions/bus/getBusDestination';
 import { useUser } from '@/contexts/userContext';
-
-const CreateTicketPage: React.FC = () => {
+import { getUser } from '../actions/users/getUser';
+const CreateTicketPage = () => {
   const router = useRouter();
-  const [destinations, setDestinations] = useState<string[]>([]);
+  const [destinations, setDestinations] = useState([]);
   const [selectedDestination, setSelectedDestination] = useState('');
-  const { user } = useUser();
+  const { data: session } = useSession();
   const [message, setMessage] = useState('');
 
   const handleCreateTicket = async () => {
     try {
-
-      const userId = user?.id;
+      const userEmail = session.user.email;
+      const user = await getUser(userEmail);
+      const userId = user.id;
       await createTicket(userId, selectedDestination);
       console.log('Ticket created successfully!');
       setMessage("Ticket created successfully!");

@@ -1,42 +1,29 @@
-'use client'
+// 'use client'
+
+// import React from 'react'
+// import { format } from 'date-fns';
+
+// const DumbAdmin = () => {
+//   return (
+//     <div className="w-full flex justify-center flex-col items-center py-12">
+//     </div>
+//   );
+// };
+
+// export default DumbAdmin;
+
+
+ 'use client'
 
 import React from 'react'
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { getAllBuses, getBusDestinations } from '../actions/bus/getBusDestination';
 
-const Admin = () => {
-  const router = useRouter();
-  const [destinations, setDestinations] = useState([]);
-
-  useEffect(() => {
-    const fetchDestinations = async () => {
-      try {
-        const fetchedDestinations = await getAllBuses();
-        setDestinations(fetchedDestinations);
-        console.log(fetchedDestinations)
-      } catch (error) {
-        console.error('Error fetching destinations:', error);
-        
-      }
-    };
-
-    fetchDestinations();
-  }, []); 
-
-  const handleRedirect = () => {
-    router.push('/auth/addBus');
-  };
-
-  const handleRedirectToView = (busId) => {
-    router.push(`/auth/bus/${busId}`);
-  };
-
-  const handleRedirectToUpdate = (busId) => {
-    router.push(`/auth/updateBus/${busId}`);
-  };
-
+const DumbAdmin = ({
+  destinations,
+  handleRedirect,
+  handleRedirectToView,
+  handleRedirectToUpdate,
+}) => {
   return (
     <div className="w-full flex justify-center flex-col items-center py-12">
       <div className="w-full max-w-6xl px-8 flex justify-between items-center">
@@ -85,8 +72,8 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-                {destinations.map((destination) => (
-                  <tr className="even:bg-blue-gray-50/50" key={destination.id}>
+                {destinations.map((destination, idx) => (
+                  <tr className="even:bg-blue-gray-50/50" key={destination.id} role='listitem'>
                     <td className="p-4">
                       <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
                         {destination.id}
@@ -111,6 +98,7 @@ const Admin = () => {
                       <button
                         className="bg-primary hover:bg-[#267961] text-black text-sm font-global-font py-2 px-4 border-2 border-black border-solid rounded-lg shadow"
                         onClick={() => handleRedirectToView(destination.id, destination.destination)}
+                        role={destination.id}
                       >
                         View
                       </button>
@@ -123,16 +111,16 @@ const Admin = () => {
                         Update
                       </button>
                     </td>
-                    {/* Add more columns as needed */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Admin;
+        </div>
+      );
+    };
+    
+    export default DumbAdmin;
+ 
